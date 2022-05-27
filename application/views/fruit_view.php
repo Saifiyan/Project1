@@ -103,13 +103,11 @@
                         var i;
                         
                         for (i = 0; i < data.length; i++) {
-                            html += '<tr>'+
+                            html += '<tr style="text-align:center;">'+
                             '<td>'+data[i].id+'</td>'+                            
                             '<td>'+data[i].name+'</td>'+                            
                             '<td>'+data[i].price+'</td>'+
-                            '<a href="javascript:void(0);" class="btn btn-info btn-sm item-edit" data-fruit_id="'+data[i].id+'" data-fruit_name="'+data[i].name+'" data-price="'+data[i].price+'">EDIT</a>'+''+'<a href="javascript:void(0);" class="btn btn-danger btn-sm item_delete" data-fruit_id="'+data[i].id+'">DELETE</a>'+
-                            
-                            '</td>'+'</tr>';
+                            '<td><a href="javascript:void(0);" class="btn btn-info btn-sm item-edit" data-fruit_id="'+data[i].id+'" data-fruit_name="'+data[i].name+'" data-price="'+data[i].price+'">EDIT</a>'+' '+'<a href="javascript:void(0);" class="btn btn-danger btn-sm item_delete" data-fruit_id="'+data[i].id+'">DELETE</a>'+'</td>'+'</tr>';
                         }
 
                         $('#show_data').html(html);
