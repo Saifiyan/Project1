@@ -66,7 +66,7 @@
                     <div class="form-group row">
                         <label class="col-md-2 col-form-label"> Price</label>
                         <div class="col-md-10">
-                            <input type="text" name="price" id="price" class="form-control" placeholder="price">
+                            <input type="number" name="price" id="price" class="form-control" placeholder="price">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -92,7 +92,7 @@
         $(document).ready(function () {
             
             // $('#form input[type=text]').each(function(){
-            $('.form-control input').each(function(){
+            $('#form input').each(function(){
                 $(this).keyup(function () { 
                 var input = $(this);
                 // var name = $('input[name=name]');
