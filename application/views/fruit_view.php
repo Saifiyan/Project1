@@ -29,7 +29,7 @@
                         <th style="text-align: right;">Action</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="show_data">
 
                 </tbody>
             </table>
@@ -90,7 +90,32 @@
 
     <script>
         $(document).ready(function () {
-            
+            show_fruit();
+            function show_fruit(){
+
+              
+                $.ajax({
+                    type: "ajax",
+                    url: "<?php echo site_url();?>/Fruit/fruit_data",
+                    dataType: "JSON",
+                    success: function (data) {
+                        var html='';
+                        var i;
+                        
+                        for (i = 0; i < data.length; i++) {
+                            html += '<tr>'+
+                            '<td>'+data[i].id+'</td>'+                            
+                            '<td>'+data[i].name+'</td>'+                            
+                            '<td>'+data[i].price+'</td>'+
+                            '<a href="javascript:void(0);" class="btn btn-info btn-sm item-edit" data-fruit_id="'+data[i].id+'" data-fruit_name="'+data[i].name+'" data-price="'+data[i].price+'">EDIT</a>'+''+'<a href="javascript:void(0);" class="btn btn-danger btn-sm item_delete" data-fruit_id="'+data[i].id+'">DELETE</a>'+
+                            
+                            '</td>'+'</tr>';
+                        }
+
+                        $('#show_data').html(html);
+                    }
+                });
+            }
             // $('#form input[type=text]').each(function(){
             $('#form input').each(function(){
                 $(this).keyup(function () { 
@@ -121,6 +146,7 @@
                             $('[name="fruit_name"]').val("");
                             $('[name="price"]').val("");
                             $('#exampleModal').modal('hide');
+                            show_fruit();
                         },
                        
                         

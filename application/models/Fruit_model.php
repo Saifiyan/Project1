@@ -12,5 +12,10 @@ class Fruit_model extends CI_Model{
         $result = $this->db->insert('fruits',$insert);
         return $result;
     }
+
+    function fruit_list(){
+        $res=$this->db->get('fruits');
+        return $res->result();
+    }
 }
 ?>

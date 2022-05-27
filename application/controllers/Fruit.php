@@ -19,6 +19,11 @@
             $data=$this->Fruit_model->save_fruit($insert);
             echo json_encode($data);
         }
+
+        function fruit_data(){
+            $data=$this->Fruit_model->fruit_list();
+            echo json_encode($data);
+        }
     }
 
 ?>
