@@ -80,8 +80,8 @@
 </form>
 <!-- -->
 
-<!-- Modal -->
-<form action="" id="form">
+<!-- Modal update -->
+<form action="" id="form_update">
     <div class="modal fade" id="Modal_edit" tabindex="-1" role="dialog" aria-labelledby="exampleModelLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -210,6 +210,27 @@
             $('[name="fruit_name_edit"]').val(fruit_name);
             $('[name="price_edit"]').val(price);
 
+        });
+
+        $('#btn_update').on('click', function(){
+            // var fruit_id=$('fruit_id_edit').val();
+            // var fruit_name=$('fruit_name_edit').val();
+            // var price=$('price_edit').val();
+            $.ajax({
+                        type: "POST",
+                        url: "<?php echo site_url();?>/Fruit/update",
+                        // data: {'fruit_name':fruit_name,'price':price},
+                        data: $('#form_update').serialize(),
+                        dataType: "JSON",
+                        success: function (data) {
+                            $('[name="fruit_id_edit"]').val("");
+                            $('[name="fruit_name_edit"]').val("");
+                            $('[name="price_edit"]').val("");
+                            $('#Modal_edit').modal('hide');
+                            console.log("aakhri");
+                            
+                        },
+            });
         });
     </script>
   </body>
