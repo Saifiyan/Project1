@@ -240,9 +240,9 @@
             
             $('#btn_save').on('click', function (e) {
                 e.preventDefault();
-                check_exist_fname();
+                // check_exist_fname();
                 check_fname();
-                // check_fprice();
+                check_fprice();
                 console.log(error_fname);
                 console.log(error_fprice);
                 if (error_fname === false && error_fprice === false){
