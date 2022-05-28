@@ -29,7 +29,7 @@ class Fruit_model extends CI_Model{
 
         $result = $this->db->update('fruits');
 
-        return $result;
+        return $fruit_name;
             
     }
 }

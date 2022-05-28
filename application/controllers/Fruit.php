@@ -27,6 +27,7 @@
 
         function update(){
             
+
             $data=$this->Fruit_model->update_fruit();
             echo json_encode($data);
         }

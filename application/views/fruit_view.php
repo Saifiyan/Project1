@@ -198,7 +198,7 @@
                     alert("Please Enter Something");
                 }
             });
-        });
+        
 
         $('#show_data').on('click','.item_edit', function(){
             var fruit_id = $(this).data('fruit_id');
@@ -209,28 +209,36 @@
             $('[name="fruit_id_edit"]').val(fruit_id);
             $('[name="fruit_name_edit"]').val(fruit_name);
             $('[name="price_edit"]').val(price);
+            
 
         });
 
         $('#btn_update').on('click', function(){
-            // var fruit_id=$('fruit_id_edit').val();
-            // var fruit_name=$('fruit_name_edit').val();
-            // var price=$('price_edit').val();
+            var fruit_id=$('#fruit_id_edit').val();
+            var fruit_name=$('#fruit_name_edit').val();
+            var price=$('#price_edit').val();
             $.ajax({
                         type: "POST",
                         url: "<?php echo site_url();?>/Fruit/update",
-                        // data: {'fruit_name':fruit_name,'price':price},
+                        // data: {
+                        //     fruit_id:fruit_id,
+                        //     fruit_name:fruit_name,
+                        //     price:price
+                        // },
                         data: $('#form_update').serialize(),
                         dataType: "JSON",
                         success: function (data) {
+                            console.log(data);
                             $('[name="fruit_id_edit"]').val("");
                             $('[name="fruit_name_edit"]').val("");
                             $('[name="price_edit"]').val("");
                             $('#Modal_edit').modal('hide');
-                            console.log("aakhri");
+                            show_fruit();
                             
                         },
             });
+        });
+
         });
     </script>
   </body>
