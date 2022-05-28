@@ -53,25 +53,28 @@
                         <label class="col-md-2 col-form-label">Fruit Name</label>
                         <div class="col-md-10">
                             <input type="text" name="fruit_name" id="fruit_name" class="form-control" placeholder="first name">
+                            <span class="error_form" id="fruit_name_error_message"></span>
                         </div>
                     </div>
                     <!-- 
-                    working with this input[type="text"]    
-                    <div class="form-group row">
-                        <label class="col-md-2 col-form-label">Fruit id</label>
-                        <div class="col-md-10">
-                            <input type="text" name="fruit_id" id="fruit_id" class="form-control" placeholder="first id">
+                        working with this input[type="text"]    
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label">Fruit id</label>
+                            <div class="col-md-10">
+                                <input type="text" name="fruit_id" id="fruit_id" class="form-control" placeholder="first id">
+                            </div>
+                        </div> -->
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label"> Price</label>
+                            <div class="col-md-10">
+                                <input type="number" name="price" id="price" class="form-control" placeholder="price">
+                                <span class="error_form" id="fruit_price_error_message"></span>
+                            </div>
                         </div>
-                    </div> -->
-                    <div class="form-group row">
-                        <label class="col-md-2 col-form-label"> Price</label>
-                        <div class="col-md-10">
-                            <input type="number" name="price" id="price" class="form-control" placeholder="price">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" type="submit" id="btn_save" class="btn btn-primary">Save</button>
+                        <span class="error_form" id="fruit_name_exist_error_message"></span>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" type="submit" id="btn_save" class="btn btn-primary">Save</button>
                     </div>
                 </div>
             </div>
@@ -162,6 +165,114 @@
 
     <script>
         $(document).ready(function () {
+
+            $('#fruit_name_error_message').hide();
+            $('#fruit_price_error_message').hide();
+
+            var error_fname = false;
+            var error_fprice = false;
+            var fnametookerror = false;
+
+            $('#fruit_name').focusout(function(){
+                check_fname();
+            });
+            $('#price').focusout(function(){
+                check_fprice();
+            });
+
+            function check_fname(){
+                var pattern = /^[a-zA-Z]*$/;
+                var fname = $('#fruit_name').val();
+                if (pattern.test(fname) && fname !== ''){
+                    $('#fruit_name_error_message').hide();
+                    $('#fruit_name').css("border-bottom","2px solid #34F458");
+                    error_fname = false;
+                } else {
+                    $('#fruit_name_error_message').html("Should contain only characters");
+                    $('#fruit_name_error_message').show();
+                    $('#fruit_name').css("border-bottom","2px solid #F90A0A");
+                    console.log('name error');
+                    error_fname = true;
+                }
+            }
+            function check_fprice(){
+                var fprice = $('#price').val().length;
+                var fprice1 = $('#price').val();
+                if (fprice >= 4 || fprice == 0){
+                    $('#fruit_price_error_message').html("Should be less than 1000");
+                    $('#fruit_price_error_message').show();
+                    $('#price').css("border-bottom","2px solid #F90A0A");
+                    console.log('price error');
+                    error_fprice = true;
+                } else {
+                    $('#fruit_price_error_message').hide();
+                    $('#price').css("border-bottom","2px solid #34F458");
+                    error_fprice = false;
+                    
+                }
+            }
+
+            function check_exist_fname(){
+                
+                var fname = $('#fruit_name').val();
+                console.log(fname);
+                $.ajax({
+                    type: "ajax",
+                    url: "<?php echo site_url();?>/Fruit/fruit_data",
+                    dataType: "JSON",
+                    success: function (data) {
+                        
+                        for (i = 0; i < data.length; i++) {
+                            if (fname == data[i].name) {
+                                // console.log(data[i].name);
+                                $('#fruit_name_exist_error_message').html("fruitname took already");
+                                return fnametookerror = true;
+                            }
+                            else{
+                                // console.log(data[i].name);
+                                return fnametookerror = false;
+                            }
+                        }
+
+                    }
+                });
+            }
+            
+            $('#btn_save').on('click', function (e) {
+                e.preventDefault();
+                check_exist_fname();
+                check_fname();
+                // check_fprice();
+                console.log(error_fname);
+                console.log(error_fprice);
+                if (error_fname === false && error_fprice === false){
+                    // alert("registration succ");
+                    $.ajax({
+                        type: "POST",
+                        url: "<?php echo site_url();?>/Fruit/save",
+                        // data: {'fruit_name':fruit_name,'price':price},
+                        data: $('#form').serialize(),
+                        dataType: "JSON",
+                        success: function (data) {
+                            console.log("not executing ?");
+                            $('[name="fruit_name"]').val("");
+                            $('[name="price"]').val("");
+                            $('#exampleModal').modal('hide');
+                            $('#price').css("border-bottom","1px solid #ced4da");
+                            $('#fruit_name').css("border-bottom","1px solid #ced4da");
+                            $('#fruit_name_exist_error_message').html("");
+                            show_fruit();
+                            fnametookerror=0;
+                        },       
+                    });
+                    return true;
+                } else{
+                    alert("please fill the form correctly");
+                    return false;
+                }
+                
+            });
+
             show_fruit();
             function show_fruit(){
 
@@ -186,48 +297,22 @@
                     }
                 });
             }
-            // update operations
+        
 
             // $('#form input[type=text]').each(function(){
-            $('#form input').each(function(){
-                $(this).keyup(function () { 
-                var input = $(this);
-                // var name = $('input[name=name]');
-                if(input.val() == "" || input.val().length < 5){
-                    input.css( "border", "1px solid red" );
-                } else{
-                    input.css("border", "1px solid #ced4da");
-                }
+            // $('#form input').each(function(){
+            //     $(this).keyup(function () { 
+            //     var input = $(this);
+            //     // var name = $('input[name=name]');
+            //     if(input.val() == "" || input.val().length < 5){
+            //         input.css( "border", "1px solid red" );
+            //     } else{
+            //         input.css("border", "1px solid #ced4da");
+            //     }
 
-                });
-            });
-            $('#btn_save').on('click', function () {
-                var fruit_name=$('#fruit_name').val();
-                var price=$('#price').val();
-                console.log(fruit_name);
-                if (fruit_name!='' && price!='') {
-                    console.log("if executed");
-                    $.ajax({
-                        type: "POST",
-                        url: "<?php echo site_url();?>/Fruit/save",
-                        // data: {'fruit_name':fruit_name,'price':price},
-                        data: $('#form').serialize(),
-                        dataType: "JSON",
-                        success: function (data) {
-                            console.log("not executing ?");
-                            $('[name="fruit_name"]').val("");
-                            $('[name="price"]').val("");
-                            $('#exampleModal').modal('hide');
-                            show_fruit();
-                        },
-                       
-                        
-                    });
-                }
-                else{
-                    alert("Please Enter Something");
-                }
-            });
+            //     });
+            // });
+       
             
         // Update modal functionalities
         $('#show_data').on('click','.item_edit', function(){
