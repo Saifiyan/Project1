@@ -165,7 +165,7 @@
             show_fruit();
             function show_fruit(){
 
-              
+                // show data read operations
                 $.ajax({
                     type: "ajax",
                     url: "<?php echo site_url();?>/Fruit/fruit_data",
@@ -186,6 +186,8 @@
                     }
                 });
             }
+            // update operations
+
             // $('#form input[type=text]').each(function(){
             $('#form input').each(function(){
                 $(this).keyup(function () { 
@@ -226,8 +228,8 @@
                     alert("Please Enter Something");
                 }
             });
-        
-
+            
+        // Update modal functionalities
         $('#show_data').on('click','.item_edit', function(){
             var fruit_id = $(this).data('fruit_id');
             var fruit_name = $(this).data('fruit_name');
@@ -267,7 +269,7 @@
             });
         });
 
-        
+        // delete modal functionalities
         $('#show_data').on('click','.item_delete', function () {
               var fruit_id= $(this).data('fruit_id');
               
