@@ -125,6 +125,34 @@
 </form>
 
 
+<!-- Modal delete -->
+<form action="" id="">
+    <div class="modal fade" id="Modal_delete" tabindex="-1" role="dialog" aria-labelledby="exampleModelLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Delete Product</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <strong>Are you sure to delete this record</strong>
+                    
+                    
+                    
+                    <div class="modal-footer">
+                        <input type="hidden" name="fruit_id_delete" id="fruit_id_delete" class="form-control">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                        <button type="button" type="submit" id="btn_delete" class="btn btn-primary">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   
@@ -237,6 +265,36 @@
                             
                         },
             });
+        });
+
+        
+        $('#show_data').on('click','.item_delete', function () {
+              var fruit_id= $(this).data('fruit_id');
+              
+              $('#Modal_delete').modal('show');
+              $('[name="fruit_id_delete"]').val(fruit_id);
+        });
+
+        $('#btn_delete').on('click', function () {
+            var fruit_id = $("#fruit_id_delete").val();
+            
+            $.ajax({
+                        type: "POST",
+                        url: "<?php echo site_url();?>/Fruit/delete",
+                        data: {
+                            fruit_id:fruit_id,
+                        },
+                        // data: $('#form_update').serialize(),
+                        dataType: "JSON",
+                        success: function (data) {
+                            console.log(data);
+                            $('[name="fruit_id_delete"]').val("");
+                            $('#Modal_delete').modal('hide');
+                            show_fruit();
+                            
+                        },
+            });
+
         });
 
         });

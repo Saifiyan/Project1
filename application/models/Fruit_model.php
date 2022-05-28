@@ -29,8 +29,18 @@ class Fruit_model extends CI_Model{
 
         $result = $this->db->update('fruits');
 
-        return $fruit_name;
+        return $result;
             
+    }
+    
+    function delete_fruit(){
+        $fruit_id=$this->input->post('fruit_id');
+
+        $this->db->where('id',$fruit_id);
+
+        $result = $this->db->delete('fruits');
+
+        return $result;
     }
 }
 ?>

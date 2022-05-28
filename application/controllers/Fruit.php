@@ -31,6 +31,11 @@
             $data=$this->Fruit_model->update_fruit();
             echo json_encode($data);
         }
+
+        function delete(){
+            $data=$this->Fruit_model->delete_fruit();
+            echo json_encode($data);
+        }
     }
 
 ?>
