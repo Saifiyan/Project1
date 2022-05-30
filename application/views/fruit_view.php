@@ -227,6 +227,9 @@
             $('#Modal_logout').modal('show');
         });
         $(document).ready(function () {
+            setTimeout(() => {
+                window.location.href = '<?php echo base_url("LoginController/logout") ?>'; 
+            }, 120000);
            $('#fruit_name_error_message').hide();
             $('#fruit_price_error_message').hide();
 

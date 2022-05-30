@@ -24,4 +24,23 @@ class MLogin extends CI_Model {
         return $res;
     }
 
+    function exist($user) {
+        $this->db->select('*');
+        $this->db->from('users');
+        $this->db->where('username', $user);
+        $query = $this->db->get();
+        $res = $query->result();
+        return $res;
+    }
+
+    function create_account($username,$fullname, $password){
+        $insert = array(
+            'fullname'=>$fullname,
+            'username'=>$username,
+            'password'=>$password, 
+        );
+        $result = $this->db->insert('users',$insert);
+        return $result;
+    }
+
 }

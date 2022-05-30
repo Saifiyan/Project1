@@ -73,5 +73,61 @@ class LoginController extends CI_Controller {
         $this->session->sess_destroy();
         redirect(base_url(''));
        } 
+    
+
+    function signup(){
+        if (isset($_SESSION['id'])) { 
+            $this->load->view('fruit_view');
+        } else {
+            /* if not, display the login window */
+            $this->load->view('singup_view');
+        }
+    }
+    
+    function signupfun(){
+        $username = $this->input->post('username');
+        $fullname = $this->input->post('fullname');
+        $password1 = $this->input->post('password1');
+        $password2 = $this->input->post('Password2');
+        if (!isset($username) || $username == '' || $username == 'undefined') {
+            /* If Username that we recieved is invalid, go here, and return 2 as output */
+            echo 2;
+            exit();
+        }
+        if (!isset($password1) || $password1 == '' || $password1 == 'undefined') {
+            /* If Password that we recieved is invalid, go here, and return 3 as output */
+            echo 3;
+            exit();
+        }
+        
+            $this->form_validation->set_rules('username', 'username', 'required');
+            $this->form_validation->set_rules('fullname', 'fullname', 'required');
+            $this->form_validation->set_rules('password1', 'password1', 'required');
+            $this->form_validation->set_rules('password2', 'password2', 'required');
+
+        if ($this->form_validation->run() == FALSE) {
+            /* If Both Username &  Password that we recieved is invalid, go here, and return 4 as output */
+            echo 4;
+            exit();
+        } else {
+            /* Create object of model MLogin.php file under models folder */
+            $signup = new MLogin();
+            /* validate($username, $Password) is the function in Mlogin.php */
+            $result = $signup->exist($username);
+            if (count($result) < 1) {
+                
+                $key = $this->config->item('encryption_key');
+                $salt1 = hash('sha512', $key . $password1);
+                $salt2 = hash('sha512', $password1 . $key);
+                $hashed_password = hash('sha512', $salt1 . $password1 . $salt2);
+                $result = $signup->create_account($username,$fullname, $hashed_password);
+                echo 1;
+            }
+            else{
+                echo 6;
+            }
+            
+        }
+    }
 
 }
