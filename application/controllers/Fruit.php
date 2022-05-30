@@ -6,7 +6,7 @@
         }
         function index(){
             /* Load the login screen, if the user is not log in */
-        if (isset($_SESSION['login']['id'])) { 
+        if (isset($_SESSION['id'])) { 
             $this->load->view('fruit_view');
         } else {
             /* if not, display the login window */

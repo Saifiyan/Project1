@@ -12,10 +12,46 @@
     <title>Furit</title>
   </head>
   <body>
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <a class="navbar-brand" href="#">Fruit Shop</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Link</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Dropdown
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Action</a>
+          <a class="dropdown-item" href="#">Another action</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+      </li>
+    </ul>
+      <!-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> -->
+  
+    <a style="color:white;cursor: pointer;"  title="Logged in : <?php echo $this->session->userdata('username'); ?>" class="nav-link">(<?php echo $this->session->userdata('username'); ?>) <span class="sr-only">(current)</span></a>
+    <button style="cursor: pointer;" id="btn_logout" class="btn btn-outline-light my-2 my-sm-0" type="submit">Logout</button>
+
+  </div>
+</nav>
+
     <div class="container">
         <div class="col-m-12">
             <div class="col-md-12" style="margin-top: 50px;">
-                <h1>Fruit
+                <h3>Welcome <?php echo $this->session->userdata('username'); ?>, </h3>
+                <h1>Fruit  
                     <small>List</small>
                     <div class="float-right"><a href="javascript:void(0);" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"><span class="fa fa-plus"></span>Add New</a></div>                    
                 </h1>
@@ -155,6 +191,29 @@
     </div>
 </form>
 
+<!-- Modal confirm logout -->
+
+<div class="modal fade"  id="Modal_logout" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Fruit Shop</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure to want to log out</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+        <form action="<?php echo base_url('LoginController/logout')?>">
+        <button type="submit" class="btn btn-primary">Yes</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -164,9 +223,11 @@
 
 
     <script>
+        $('#btn_logout').on('click', function () {
+            $('#Modal_logout').modal('show');
+        });
         $(document).ready(function () {
-
-            $('#fruit_name_error_message').hide();
+           $('#fruit_name_error_message').hide();
             $('#fruit_price_error_message').hide();
 
             var error_fname = false;

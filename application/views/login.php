@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Login in CodeIgniter using Ajax from Scratch</title>
+        <title>Login</title>
         <!--Include Jquery-->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <!--Include Bootstrap-->
@@ -12,7 +12,7 @@
         <style>
 
             body{
-                background-image: url("<?php echo base_url(); ?>assets/images/body-bg.jpg");
+                background-image: url("<?php echo base_url(); ?>assets/images/body-bg.jpeg");
                 background-size: cover;
                 background-repeat: no-repeat;
                 background-attachment: fixed;
@@ -37,7 +37,7 @@
     <body>
         <div class="login-wrap">
             <div id="login">
-                <h3 class="text-center text-white pt-5">Login in CodeIgniter using Ajax</h3>
+                <h3 class="text-center text-white pt-5">Login</h3>
                 <div class="container">
                     <div id="login-row" class="row justify-content-center align-items-center">
                         <div id="login-column" class="col-md-6">
@@ -100,6 +100,7 @@
                                 setTimeout(function () {
                                     /*Redirect to login page after 1 sec*/
                                     window.location.href = '<?php echo base_url("") ?>';
+                                    console.log($data);
                                 }, 1000)
                             } else if (result == 2) {
                                 /*if response result is 2, it means, username is invalid.*/

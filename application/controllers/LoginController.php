@@ -61,7 +61,7 @@ class LoginController extends CI_Controller {
                     'id' => $result[0]->id,
                     'username' => $result[0]->username
                 );
-                $this->session->set_userdata('login', $data);
+                $this->session->set_userdata($data);
                 echo 1;
             } else {
                 /* If Both Username &  Password that we recieved is invalid, go here, and return 5 as output */
@@ -69,5 +69,9 @@ class LoginController extends CI_Controller {
             }
         }
     }
+    public function logout(){
+        $this->session->sess_destroy();
+        redirect(base_url(''));
+       } 
 
 }
