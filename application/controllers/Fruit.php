@@ -5,7 +5,13 @@
             $this->load->model('Fruit_model');
         }
         function index(){
-            $this->load->view('Fruit_view');
+            /* Load the login screen, if the user is not log in */
+        if (isset($_SESSION['login']['id'])) { 
+            $this->load->view('fruit_view');
+        } else {
+            /* if not, display the login window */
+            $this->load->view('login');
+        }
         }
 
         function save(){
