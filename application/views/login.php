@@ -97,6 +97,8 @@
                                 /*if response result is 1, it means it is successful.*/
                                 $('#username').css('border', '1px solid green');
                                 $('#password').css('border', '1px solid green');
+                                $('#response').html('Valid User !');
+                                $('#response').css('color','green');
                                 setTimeout(function () {
                                     /*Redirect to login page after 1 sec*/
                                     window.location.href = '<?php echo base_url("") ?>';
@@ -126,7 +128,7 @@
 
                             }else {
 
-                                $('#response').html('Something went wrong');
+                                $('#response').html('Something went wrong !');
                             }
                         }
                     });

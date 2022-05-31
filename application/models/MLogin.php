@@ -17,11 +17,17 @@ class MLogin extends CI_Model {
     function validate($user, $pass) {
         $this->db->select('*');
         $this->db->from('users');
-        $this->db->where('password', $pass);
+        // $this->db->where('password', $pass);
         $this->db->where('username', $user);
         $query = $this->db->get();
-        $res = $query->result();
-        return $res;
+        $data = $query->row();
+        $res = $query->result_array();
+        $res1 = $query->result();
+        if ($res[0]['password'] == md5($pass)) {
+            return $res1;
+            // echo "succes";
+        }
+        
     }
 
     function exist($user) {
@@ -43,4 +49,8 @@ class MLogin extends CI_Model {
         return $result;
     }
 
+   
+
 }
+
+?>

@@ -32,6 +32,8 @@ class LoginController extends CI_Controller {
 
     function getLogin() {
         /* Data that we receive from ajax */
+        // print_r($_POST);
+        // die();
         $username = $this->input->post('UserName');
         $Password = $this->input->post('Password');
         if (!isset($username) || $username == '' || $username == 'undefined') {
@@ -54,6 +56,7 @@ class LoginController extends CI_Controller {
             /* Create object of model MLogin.php file under models folder */
             $Login = new MLogin();
             /* validate($username, $Password) is the function in Mlogin.php */
+            
             $result = $Login->validate($username, $Password);
             if (count($result) == 1) {
                 /* If everything is fine, then go here, and return 1 as output and set session */
@@ -115,12 +118,8 @@ class LoginController extends CI_Controller {
             /* validate($username, $Password) is the function in Mlogin.php */
             $result = $signup->exist($username);
             if (count($result) < 1) {
-                
-                $key = $this->config->item('encryption_key');
-                $salt1 = hash('sha512', $key . $password1);
-                $salt2 = hash('sha512', $password1 . $key);
-                $hashed_password = hash('sha512', $salt1 . $password1 . $salt2);
-                $result = $signup->create_account($username,$fullname, $hashed_password);
+                $Password = md5($password1);
+                $result = $signup->create_account($username,$fullname, $Password);
                 echo 1;
             }
             else{
@@ -129,5 +128,9 @@ class LoginController extends CI_Controller {
             
         }
     }
+    // for hashed password in signup 
+    private function hash_password($password){
+        return password_hash($password, PASSWORD_BCRYPT);
+     }
 
 }
