@@ -6,9 +6,10 @@ class LoginController extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-        
+        $this->load->helper('form');
         /* Load MLogin model*/
         $this->load->model('mlogin');
+        $this->load->helper('cookie');
     }
 
     // public function index() {
@@ -34,8 +35,13 @@ class LoginController extends CI_Controller {
         /* Data that we receive from ajax */
         // print_r($_POST);
         // die();
-        $username = $this->input->post('UserName');
-        $Password = $this->input->post('Password');
+        $username = $this->input->post('username');
+        $Password = $this->input->post('password');
+        $cookie = $this->input->post('rememberme');
+        if (isset($cookie)) {
+            setcookie("username_cookie", $username, time()+86400);
+            setcookie("password_cookie", $Password, time()+86400);
+        }
         if (!isset($username) || $username == '' || $username == 'undefined') {
             /* If Username that we recieved is invalid, go here, and return 2 as output */
             echo 2;
@@ -46,8 +52,8 @@ class LoginController extends CI_Controller {
             echo 3;
             exit();
         }
-        $this->form_validation->set_rules('UserName', 'UserName', 'required');
-        $this->form_validation->set_rules('Password', 'Password', 'required');
+        $this->form_validation->set_rules('username', 'username', 'required');
+        $this->form_validation->set_rules('password', 'password', 'required');
         if ($this->form_validation->run() == FALSE) {
             /* If Both Username &  Password that we recieved is invalid, go here, and return 4 as output */
             echo 4;
@@ -88,6 +94,7 @@ class LoginController extends CI_Controller {
     }
     
     function signupfun(){
+        
         $username = $this->input->post('username');
         $fullname = $this->input->post('fullname');
         $password1 = $this->input->post('password1');

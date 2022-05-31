@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -74,7 +75,12 @@
 
 
 <!-- Modal -->
-<form action="" id="form">
+<!-- <form action="" id="form"> -->
+<?php 
+$attributes = array(
+    'id' => 'form',
+);
+echo form_open('', $attributes); ?>
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModelLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -120,7 +126,12 @@
 <!-- -->
 
 <!-- Modal update -->
-<form action="" id="form_update">
+<?php 
+$attributes = array(
+    'id' => 'form_update',
+);
+echo form_open('', $attributes); ?>
+<!-- <form id="form_update"> -->
     <div class="modal fade" id="Modal_edit" tabindex="-1" role="dialog" aria-labelledby="exampleModelLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -165,7 +176,8 @@
 
 
 <!-- Modal delete -->
-<form action="" id="">
+<!-- <form> -->
+<?php $attribute = array('id'=> 'form_delete'); echo form_open('', $attribute); ?>
     <div class="modal fade" id="Modal_delete" tabindex="-1" role="dialog" aria-labelledby="exampleModelLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -227,9 +239,9 @@
             $('#Modal_logout').modal('show');
         });
         $(document).ready(function () {
-            setTimeout(() => {
-                window.location.href = '<?php echo base_url("LoginController/logout") ?>'; 
-            }, 120000);
+            // setTimeout(() => {
+            //     window.location.href = '<?php echo base_url("LoginController/logout") ?>'; 
+            // }, 480000);
            $('#fruit_name_error_message').hide();
             $('#fruit_price_error_message').hide();
 
@@ -432,10 +444,10 @@
             $.ajax({
                         type: "POST",
                         url: "<?php echo site_url();?>/Fruit/delete",
-                        data: {
-                            fruit_id:fruit_id,
-                        },
-                        // data: $('#form_update').serialize(),
+                        // data: {
+                        //     fruit_id:fruit_id,
+                        // },
+                        data: $('#form_delete').serialize(),
                         dataType: "JSON",
                         success: function (data) {
                             console.log(data);

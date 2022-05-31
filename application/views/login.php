@@ -43,20 +43,28 @@
                         <div id="login-column" class="col-md-6">
                             <div id="login-box" class="col-md-12">
                                 <!--HTML FORM-->
+        <?php 
+        $attribute = array('id' => 'login_form');
+        echo form_open('', $attribute);
+        ?>
                                 <div id="login-form" class="form">
                                     <h3 class="text-info">Login</h3>
                                     <p id="response"></p>
                                     <div class="form-group">
                                         <label for="username" class="text-info">Username:</label><br>
-                                        <input type="text" name="username" id="username" class="form-control">
+                                        <input type="text" name="username" id="username" val="<?php if (isset($_COOKIE['username_cookie'])) {echo $_COOKIE['username_cookie'];} ?>" class="form-control">
                                     </div>
                                     <div class="form-group">
                                         <label for="password" class="text-info">Password:</label><br>
-                                        <input type="text" name="password" id="password" class="form-control">
+                                        <input type="text" name="password" id="password"  val="<?php if (isset($_COOKIE['password_cookie'])) {echo $_COOKIE['password_cookie'];} ?>" class="form-control" >
+                                    </div>
+                                    <div class="">
+                                        <input name="rememberme" id="rememberme" type="checkbox"> Remember me
                                     </div>
                                     <div class="form-group">
-                                        <input type="submit" name="submit" class="btn btn-info btn-md" value="submit" onclick="submitform()">
+                                        <input type="submit" name="submit" class="btn btn-info btn-md" value="submit" id="btn_login">
                                     </div>
+        </form>
                                 </div>
                             </div>
                         </div>
@@ -68,9 +76,11 @@
 
         <script>
 
-            function submitform() {
+           
+                $('#btn_login').on('click', function (e) {
 
-
+                e.preventDefault();
+                var remember = 0;
                 var flag = 0;
                 /*Checking the value of inputs*/
                 var username = $('#username').val();
@@ -90,7 +100,7 @@
                     $.ajax({
                         url: "<?php echo base_url('LoginController/getLogin') ?>",
                         method: 'POST',
-                        data: "UserName=" + username + "&Password=" + password,
+                        data: $('#login_form').serialize(),
                         success: function (result) {
                             /*result is the response from LoginController.php file under getLogin.php function*/
                             if (result == 1) {
@@ -135,7 +145,7 @@
                 } else {
                     $('#response').html('Something went wrong');
                 }
-            }
+            });
         </script>
     </body>
 </html>

@@ -42,7 +42,12 @@
                         <div id="login-column" class="col-md-6">
                             <div id="login-box" class="col-md-12">
                                 <!--HTML FORM-->
-                                <form id="from_signup">
+                                <!-- <form id="from_signup"> -->
+                                    <?php 
+                                    $attributes = array(
+                                        'id' => 'from_signup',
+                                    );
+                                    echo form_open('', $attributes); ?>
                                 <div id="login-form" class="form">
                                     <h3 class="text-info">Signup</h3>
                                     <p id="response"></p>
