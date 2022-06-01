@@ -34,7 +34,7 @@ class Fruit_model extends CI_Model{
     }
     
     function delete_fruit(){
-        $fruit_id=$this->input->post('fruit_id');
+        $fruit_id=$this->input->post('fruit_id_delete');
 
         $this->db->where('id',$fruit_id);
 
