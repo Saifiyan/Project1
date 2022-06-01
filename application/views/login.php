@@ -52,11 +52,11 @@
                                     <p id="response"></p>
                                     <div class="form-group">
                                         <label for="username" class="text-info">Username:</label><br>
-                                        <input type="text" name="username" id="username" val="<?php if (isset($_COOKIE['username_cookie'])) {echo $_COOKIE['username_cookie'];} ?>" class="form-control">
+                                        <input type="text" name="username" id="username" value="<?php print_r($_COOKIE); if(isset($_COOKIE['usernamecookie'])){echo $_COOKIE['usernamecookie'];} else{echo "user2";} ?>" class="form-control">
                                     </div>
                                     <div class="form-group">
                                         <label for="password" class="text-info">Password:</label><br>
-                                        <input type="text" name="password" id="password"  val="<?php if (isset($_COOKIE['password_cookie'])) {echo $_COOKIE['password_cookie'];} ?>" class="form-control" >
+                                        <input type="text" name="password" id="password"  value="<?php if(isset($_COOKIE["passwordcookie"])){echo $_COOKIE["passwordcookie"];} else{echo "user1";} ?>" class="form-control" >
                                     </div>
                                     <div class="">
                                         <input name="rememberme" id="rememberme" type="checkbox"> Remember me

@@ -9,7 +9,7 @@ class LoginController extends CI_Controller {
         $this->load->helper('form');
         /* Load MLogin model*/
         $this->load->model('mlogin');
-        $this->load->helper('cookie');
+        // $this->load->helper('cookie');
     }
 
     // public function index() {
@@ -39,8 +39,8 @@ class LoginController extends CI_Controller {
         $Password = $this->input->post('password');
         $cookie = $this->input->post('rememberme');
         if (isset($cookie)) {
-            setcookie("username_cookie", $username, time()+86400);
-            setcookie("password_cookie", $Password, time()+86400);
+            setcookie("usernamecookie", $username, time()+86400);
+            setcookie("passwordcookie", $Password, time()+86400);
         }
         if (!isset($username) || $username == '' || $username == 'undefined') {
             /* If Username that we recieved is invalid, go here, and return 2 as output */
